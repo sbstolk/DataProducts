@@ -1,17 +1,38 @@
-palette(c("#4f37b8", "#21905b", "#21d4e3", "#8e78a5", "#2393e7"))
-shinyServer(function(input, output, session) {
- selectedData <- reactive({
-    iris[, c(input$xcol, input$ycol)]
-  })
-  clusters <- reactive({
-    kmeans(selectedData(), input$clusters)
-  })
-  output$plot1 <- renderPlot({
-    par(mar = c(5.1, 4.1, 0, 1))
-    plot(selectedData(),
-         col = clusters()$cluster,
-         pch = 20, cex = 3)
-    points(clusters()$centers, pch = 4, cex = 4, lwd = 4)
-  })
-})
-
+## Load shiny library
+library(shiny)
+## Standard shinyserver function to caculate the outputs to be displayed
+shinyServer(
+  function(input, output) {
+    ## Render the input temperature
+    output$text_input_temperature <- renderText({
+      input_temperature()
+    })
+    ## To find the input units from radio button values
+    input_temperature <- reactive({
+      if(input$type == 1)
+        input_temperature <- paste(input$slider_temperature, "Celsius")
+      else
+        input_temperature <- paste(input$slider_temperature, "Fahrenheit")
+    })
+    ## Calculate and render the output temperature with units
+    converted <- reactive({
+      if(input$type == 1)
+        converted <- paste(ctof(input$slider_temperature), "Fahrenheit")
+      else
+        converted <- paste(ftoc(input$slider_temperature), "Celsius")
+    })
+    output$text_output_temperature <- renderText({
+      converted()
+    })
+    ## Function to convert Celsius to Fahrenheit
+    ctof <- function(c)
+    {
+      (c * 9)/5 + 32
+    }
+    ## Function to convert Fahrenheit to Celsius
+    ftoc <- function(f)
+    {
+      (f - 32) * 5/9
+    }
+  }
+)
