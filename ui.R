@@ -12,9 +12,9 @@ shinyUI(pageWithSidebar(
                                 "Convert miles to kilometers" = 2),selected = 1),
     br(),
     sliderInput("slider_distance",
-                label = p(h5("Choose the temperature you want to convert")),
-                min = -200, max = 200, value = 10)
-    ),
+                label = p(h5("Choose the distance you want to convert")),
+                min = 0, max = 500, value = 5)
+  ),
   ## MainPanel
   mainPanel(
     tabsetPanel(
@@ -31,15 +31,15 @@ shinyUI(pageWithSidebar(
                p(h4(":")),
                br(),
                helpText("This app allows the user to convert between miles and kilometers, starting from either metric or non-metric units."),
-HTML("<u><b>Formula used for the conversion is: </b></u>
-     <br> <br>
-     <b> M = (K * 1.61) + 32 ; K = M*0.621 </b>
-     <br>
-     You can enter any integer values between -500 to 500 using the slider for both miles and kilometers <br>
-     <br>
-     Select a unit on the slider, and the input and the converted output will be displayed<br>
-     ")
-)
-)
-)
-))
+               HTML("<u><b>Formula used for the conversion is: </b></u>
+                    <br> <br>
+                    <b> M = (K * 1.61) + 32 ; K = M*0.621 </b>
+                    <br>
+                    You can enter any integer values between 0 to 500 using the slider for both miles and kilometers <br>
+                    <br>
+                    Select a unit on the slider, and the input and the converted output will be displayed<br>
+                    ")
+               )
+               )
+               )
+               ))
