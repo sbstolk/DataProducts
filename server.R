@@ -27,7 +27,7 @@ shinyServer(
     ## Function to convert miles to kilometers
     convertmiles <- function(m)
     {
-      k*1.609
+      m*1.609
     }
     ## Function to convert Fahrenheit to Celsius
     convertkilometers <- function(k)
