@@ -3,36 +3,36 @@ library(shiny)
 ## Standard shinyserver function to caculate the outputs to be displayed
 shinyServer(
   function(input, output) {
-    ## Render the input temperature
-    output$text_input_temperature <- renderText({
-      input_temperature()
+    ## Render the input
+    output$text_input_distance <- renderText({
+      input_distance()
     })
     ## To find the input units from radio button values
-    input_temperature <- reactive({
+    input_distance <- reactive({
       if(input$type == 1)
-        input_temperature <- paste(input$slider_temperature, "Celsius")
+        input_distance <- paste(input$slider_distance, "kilometers")
       else
-        input_temperature <- paste(input$slider_temperature, "Fahrenheit")
+        input_distance <- paste(input$slider_distance, "miles")
     })
-    ## Calculate and render the output temperature with units
+    ## Calculate and render output
     converted <- reactive({
       if(input$type == 1)
-        converted <- paste(ctof(input$slider_temperature), "Fahrenheit")
+        converted <- paste(convertkilometers(input$slider_distance), "miles")
       else
-        converted <- paste(ftoc(input$slider_temperature), "Celsius")
+        converted <- paste(convertmiles(input$slider_distance), "kilometers")
     })
-    output$text_output_temperature <- renderText({
+    output$text_output_distance <- renderText({
       converted()
     })
-    ## Function to convert Celsius to Fahrenheit
-    ctof <- function(c)
+    ## Function to convert miles to kilometers
+    convertmiles <- function(m)
     {
-      (c * 9)/5 + 32
+      k*1.609
     }
     ## Function to convert Fahrenheit to Celsius
-    ftoc <- function(f)
+    convertkilometers <- function(k)
     {
-      (f - 32) * 5/9
+      k*0.621
     }
   }
 )
