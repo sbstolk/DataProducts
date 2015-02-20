@@ -1,13 +1,46 @@
+## Load shiny library
+library(shiny)
+## Standard shinyUI for GUI display
 shinyUI(pageWithSidebar(
-  headerPanel('Iris k-means clustering'),
+  titlePanel("Simple Temperature conversion application"),
+  ## Sidebarpanel
   sidebarPanel(
-    selectInput('xcol', 'X Variable', names(iris)),
-    selectInput('ycol', 'Y Variable', names(iris),
-                selected=names(iris)[[2]]),
-    numericInput('clusters', 'Cluster count', 3,
-                 min = 1, max = 5)
-  ),
+    helpText(p(h5("This application converts the temperature from celsius to Fahrenheit and vice versa
+                  based on your inputs."))),
+    br(),
+    radioButtons("type", label = p(h5("Choose conversion type")),
+                 choices = list("Convert Celsius to Fahrenheit" = 1,
+                                "Convert Fahrenheit to Celsius" = 2),selected = 1),
+    br(),
+    sliderInput("slider_temperature",
+                label = p(h5("Choose the temperature you want to convert")),
+                min = -200, max = 200, value = 10)
+    ),
+  ## MainPanel
   mainPanel(
-    plotOutput('plot1')
-  )
+    tabsetPanel(
+      tabPanel("Output",
+               p(h5("Input:")),
+               textOutput("text_input_units"),
+               textOutput("text_input_distance"),
+               br(),
+               p(h5("Converts to:")),
+               textOutput("text_output_distance"),
+               textOutput("text_output_units")
+      ),
+      tabPanel("How to Use the App",
+               p(h4(":")),
+               br(),
+               helpText("This app allows the user to convert between miles and kilometers, starting from either metric or non-metric units."),
+HTML("<u><b>Formula used for the conversion is: </b></u>
+     <br> <br>
+     <b> M = (K * 1.61) + 32 ; K = M*0.621 </b>
+     <br>
+     You can enter any integer values between -500 to 500 using the slider for both miles and kilometers <br>
+     <br>
+     Select a unit on the slider, and the input and the converted output will be displayed<br>
+     ")
+)
+)
+)
 ))
