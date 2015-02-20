@@ -2,17 +2,16 @@
 library(shiny)
 ## Standard shinyUI for GUI display
 shinyUI(pageWithSidebar(
-  titlePanel("Simple Temperature conversion application"),
+  titlePanel("Metric/Imperial Distance Converter"),
   ## Sidebarpanel
   sidebarPanel(
-    helpText(p(h5("This application converts the temperature from celsius to Fahrenheit and vice versa
-                  based on your inputs."))),
+    helpText(p(h5("Use this app to convert distance between miles and kilometers."))),
     br(),
     radioButtons("type", label = p(h5("Choose conversion type")),
-                 choices = list("Convert Celsius to Fahrenheit" = 1,
-                                "Convert Fahrenheit to Celsius" = 2),selected = 1),
+                 choices = list("Convert kilometers to miles" = 1,
+                                "Convert miles to kilometers" = 2),selected = 1),
     br(),
-    sliderInput("slider_temperature",
+    sliderInput("slider_distance",
                 label = p(h5("Choose the temperature you want to convert")),
                 min = -200, max = 200, value = 10)
     ),
